@@ -1,0 +1,20 @@
+Problem -1038. Binary Search Tree to Greater Sum Tree
+class Solution {
+public:
+    void traverse(TreeNode* root, int &sum)
+    {
+        if(root== NULL) return;
+        if(root->right)
+        traverse(root->right, sum);
+        sum+=root->val;
+        root->val=sum;
+         if(root->left)
+        traverse(root->left, sum);
+
+    }
+    TreeNode* bstToGst(TreeNode* root) {
+        int sum=0;
+       traverse (root, sum);
+       return root;
+    }
+};
