@@ -1,0 +1,41 @@
+2196. Create Binary Tree From Descriptions
+
+class Solution {
+public:
+    TreeNode* createBinaryTree(vector<vector<int>>& descriptions) {
+        unordered_map<int, TreeNode*> desciption;
+        unordered_set<int> childset;
+
+        for(vector<int>node : descriptions)
+        {
+            int parent=node[0];
+            int child= node[1];
+            int isLeft=node[2];
+
+            if(desciption.find(parent)==desciption.end())
+            {
+                desciption[parent]=new TreeNode(parent);
+            }
+            if(desciption.find(child)==desciption.end())
+            {
+               desciption[child]=new TreeNode(child);
+            }
+            if(isLeft == 1)
+              desciption[parent]->left=desciption[child];
+            else 
+              desciption[parent]->right=desciption[child];
+
+            childset.insert(child);
+        }
+        
+        for( auto c: descriptions)
+        { 
+            int ch= c[0];
+        if(childset.find(ch)==childset.end())
+        {
+            return desciption[ch];
+        }
+        }
+        return NULL;
+    }
+};
