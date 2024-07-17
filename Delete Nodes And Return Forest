@@ -1,0 +1,28 @@
+1110. Delete Nodes And Return Forest
+
+class Solution {
+public:
+    vector<TreeNode*> delNodes(TreeNode* root, vector<int>& to_delete) {
+        vector<TreeNode*> rst;
+        unordered_set<int> removeSet(to_delete.begin(), to_delete.end());
+
+        root = dfs(root, removeSet, rst);
+        if (root) rst.push_back(root);
+        return rst;
+    }
+
+
+    TreeNode* dfs(TreeNode* root, unordered_set<int>& removeSet, vector<TreeNode*>& rst){
+        if (root==nullptr) return nullptr;
+        root->left= dfs(root->left, removeSet, rst);
+        root->right = dfs(root->right, removeSet, rst);
+
+        if (removeSet.count(root->val)){
+            if (root->left) rst.push_back(root->left);
+            if (root->right) rst.push_back(root->right);
+            delete root;
+            return nullptr;
+        }
+        return root;
+    }
+};
