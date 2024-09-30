@@ -1,0 +1,33 @@
+1381. Design a Stack With Increment Operation
+
+class CustomStack{
+  public:
+        int size;
+        stack<int> st;
+        vector<int> inc;
+   CustomStack( int maxSize){
+      size= maxSize;
+   }
+
+  void push(int x){
+       if(st.size() < size) {
+        st.push(x);
+        inc.push_back(0);
+  }
+
+ void inc(int k , int val){
+     if(!st.empty) {
+     int idx = min(k,(int)inc.size())-1;
+       inc[idx]+= val;
+     }
+ }
+int pop(){
+    if(st.empty)  return -1;
+    if(inc.size()>1) inc[st.size()-2]+= inc.back();
+
+    int res = st.top()+ inc.back();
+    st.pop();
+    inc.pop_back();
+    return res;
+}
+}
